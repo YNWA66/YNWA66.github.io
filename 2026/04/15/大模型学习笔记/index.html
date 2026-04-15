@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 8.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="机器学习基本概念一、概念1.什么是机器学习让计算机从数据中自动找规律 2.机器学习分类监督学习：数据有标签，模型学习预测标签 无监督学习：数据没有标签，模型学习数据结构或分布 半监督学习：少量数据有标签 强化学习：学习最优策略 自监督学习：没有人工标签，模型自己制造任务来学习特征 3.机器学习的任务   类别 目标 输入输出示例 常用算法&#x2F;模型    1️⃣ 分类（Classificat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大模型学习笔记">
+<meta property="og:url" content="http://example.com/2026/04/15/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="Hello World">
+<meta property="og:description" content="机器学习基本概念一、概念1.什么是机器学习让计算机从数据中自动找规律 2.机器学习分类监督学习：数据有标签，模型学习预测标签 无监督学习：数据没有标签，模型学习数据结构或分布 半监督学习：少量数据有标签 强化学习：学习最优策略 自监督学习：没有人工标签，模型自己制造任务来学习特征 3.机器学习的任务   类别 目标 输入输出示例 常用算法&#x2F;模型    1️⃣ 分类（Classificat">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3512cb73c7d2a37d2176d0f372702187.png">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/8b182f2a37ccf5924219f23c44fab8c0.jpeg">
+<meta property="og:image" content="https://i-blog.csdnimg.cn/blog_migrate/3f6ed3c5d717ccc33b19dd8843b22900.gif">
+<meta property="article:published_time" content="2026-04-15T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-04-15T14:46:41.101Z">
+<meta property="article:author" content="Porter">
+<meta property="article:tag" content="大模型">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i-blog.csdnimg.cn/blog_migrate/3512cb73c7d2a37d2176d0f372702187.png">
+
+<link rel="canonical" href="http://example.com/2026/04/15/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>大模型学习笔记 | Hello World</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hello World</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2026/04/15/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Porter">
+      <meta itemprop="description" content="世界是你们的，也是我们的，但是归根结底是你们的">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hello World">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          大模型学习笔记
+        </h1>
+
+        <div class="post-meta">
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2026-04-15 14:00:00 / 修改时间：22:46:41" itemprop="dateCreated datePublished" datetime="2026-04-15T14:00:00+08:00">2026-04-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="机器学习基本概念"><a href="#机器学习基本概念" class="headerlink" title="机器学习基本概念"></a>机器学习基本概念</h1><h2 id="一、概念"><a href="#一、概念" class="headerlink" title="一、概念"></a>一、概念</h2><h4 id="1-什么是机器学习"><a href="#1-什么是机器学习" class="headerlink" title="1.什么是机器学习"></a>1.什么是机器学习</h4><p>让计算机从数据中自动找规律</p>
+<h4 id="2-机器学习分类"><a href="#2-机器学习分类" class="headerlink" title="2.机器学习分类"></a>2.机器学习分类</h4><p>监督学习：数据有标签，模型学习预测标签</p>
+<p>无监督学习：数据没有标签，模型学习数据结构或分布</p>
+<p>半监督学习：少量数据有标签</p>
+<p>强化学习：学习最优策略</p>
+<p>自监督学习：没有人工标签，模型自己制造任务来学习特征</p>
+<h4 id="3-机器学习的任务"><a href="#3-机器学习的任务" class="headerlink" title="3.机器学习的任务"></a>3.机器学习的任务</h4><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>目标</th>
+<th>输入输出示例</th>
+<th>常用算法&#x2F;模型</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1️⃣ 分类（Classification）</td>
+<td>判断输入属于哪个类别</td>
+<td>图像 → 猫&#x2F;狗；邮件 → 垃圾&#x2F;正常</td>
+<td>逻辑回归、SVM、CNN、随机森林</td>
+</tr>
+<tr>
+<td>2️⃣ 回归（Regression）</td>
+<td>预测一个连续数值</td>
+<td>面积 → 房价；温度 → 电阻值</td>
+<td>线性回归、SVR、神经网络</td>
+</tr>
+<tr>
+<td>3️⃣ 聚类（Clustering）</td>
+<td>自动把样本分成若干组</td>
+<td>客户数据 → 分人群</td>
+<td>K-Means、层次聚类、GMM</td>
+</tr>
+<tr>
+<td>4️⃣ 降维（Dimensionality Reduction）</td>
+<td>压缩高维数据、提取主要特征</td>
+<td>1000维特征 → 2维可视化</td>
+<td>PCA、t-SNE、自编码器</td>
+</tr>
+<tr>
+<td>5️⃣ 生成（Generation）</td>
+<td>学习分布并生成新样本</td>
+<td>学人脸分布 → 生成新面孔</td>
+<td>VAE、GAN、扩散模型</td>
+</tr>
+<tr>
+<td>6️⃣ 序列预测（Sequential Prediction）</td>
+<td>根据时间序列预测未来</td>
+<td>股票走势、语音信号</td>
+<td>RNN、LSTM、Transformer</td>
+</tr>
+<tr>
+<td>7️⃣ 推荐与排序（Recommendation &#x2F; Ranking）</td>
+<td>给用户推荐内容</td>
+<td>用户历史 → 推荐电影</td>
+<td>协同过滤、DeepFM、强化学习推荐</td>
+</tr>
+<tr>
+<td>8️⃣ 强化决策（Reinforcement Decision Making）</td>
+<td>通过交互学习策略</td>
+<td>游戏AI、机器人控制</td>
+<td>Q-Learning、PPO、DQN</td>
+</tr>
+<tr>
+<td>9️⃣ 异常检测（Anomaly Detection）</td>
+<td>找出“与众不同”的数据</td>
+<td>网络攻击、设备故障</td>
+<td>One-Class SVM、Isolation Forest</td>
+</tr>
+<tr>
+<td>🔟 表征学习（Representation Learning）</td>
+<td>学出数据的“隐含特征”</td>
+<td>文本、图像嵌入</td>
+<td>自监督学习、对比学习、Transformer 预训练</td>
+</tr>
+</tbody></table>
+<h2 id="二、Pytorch"><a href="#二、Pytorch" class="headerlink" title="二、Pytorch"></a>二、Pytorch</h2><h4 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/little_carter/article/details/135934842?ops_request_misc=elastic_search_misc&request_id=6199f912565b91c72e9a94ea6d6dd4b5&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-135934842-null-null.142%5Ev102%5Epc_search_result_base3&utm_term=pytorch&spm=1018.2226.3001.4187">Anaconda、CUDA、Pytorch安装</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45790241/article/details/141344954?ops_request_misc=elastic_search_misc&request_id=a734837e7373d94059377b77748db860&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-141344954-null-null.142%5Ev102%5Epc_search_result_base3&utm_term=vscode%20pytorch&spm=1018.2226.3001.4187">Pytorch+VsCode</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jly_20220520/article/details/136065910?ops_request_misc=elastic_search_misc&request_id=93802f49d3866406c4499da4a45d637f&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-6-136065910-null-null.142%5Ev102%5Epc_search_result_base3&utm_term=vscode%20python%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6&spm=1018.2226.3001.4187">VsCode中Python编辑器设置</a></p>
+<h4 id="2-使用"><a href="#2-使用" class="headerlink" title="2.使用"></a>2.使用</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/ccaoshangfei/article/details/126074300?ops_request_misc=elastic_search_misc&request_id=de1fab872a8683e4824c98e16d8885e5&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-3-126074300-null-null.142%5Ev102%5Epc_search_result_base3&utm_term=pytorch&spm=1018.2226.3001.4187">Pytorch基础</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/527663163">Colab使用教程</a></p>
+<h2 id="三、CNN"><a href="#三、CNN" class="headerlink" title="三、CNN"></a>三、CNN</h2><h4 id="1-神经网络"><a href="#1-神经网络" class="headerlink" title="1.神经网络"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/v_july_v/article/details/51812459?ops_request_misc=elastic_search_misc&request_id=2cb562d51851f32a7c2652b12d362199&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-51812459-null-null.142%5Ev102%5Epc_search_result_base3&utm_term=CNN&spm=1018.2226.3001.4187">1.神经网络</a></h4><h5 id="神经元："><a href="#神经元：" class="headerlink" title="神经元："></a>神经元：</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/3512cb73c7d2a37d2176d0f372702187.png" alt="img"></p>
+<p>x：输入</p>
+<p>w：权重</p>
+<p>b：偏置</p>
+<p>g（z）：激活函数，让网络具有非线性</p>
+<p>a：输出</p>
+<p>神经元就是一个矩阵操作，矩阵的行数&#x3D;前一个神经元的个数，列数&#x3D;后一个神经元的个数。</p>
+<h5 id="神经网络："><a href="#神经网络：" class="headerlink" title="神经网络："></a>神经网络：</h5><p><img src="https://i-blog.csdnimg.cn/blog_migrate/8b182f2a37ccf5924219f23c44fab8c0.jpeg" alt="img"></p>
+<p>输入层：神经元接受输入向量</p>
+<p>输出层：神经元输出输出向量</p>
+<p>隐藏层：输入层和输出层之间形成的各个层面</p>
+<h4 id="2-卷积神经网络"><a href="#2-卷积神经网络" class="headerlink" title="2.卷积神经网络"></a><a target="_blank" rel="noopener" href="https://blog.csdn.net/shinuone/article/details/127289512?ops_request_misc=elastic_search_misc&request_id=2cb562d51851f32a7c2652b12d362199&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-3-127289512-null-null.142%5Ev102%5Epc_search_result_base3&utm_term=CNN&spm=1018.2226.3001.4187">2.卷积神经网络</a></h4><p>通俗理解：CNN在未知图像上一个局部一个局部地提取特征，最后完成分类或回归</p>
+<h5 id="1）网络结构"><a href="#1）网络结构" class="headerlink" title="1）网络结构"></a>1）网络结构</h5><p><strong>卷积Conv</strong>：相当于一个滤波器，将原图像与一个滤波矩阵进行遍历内积。不同的卷积核提取不同的特征</p>
+<p><img src="https://i-blog.csdnimg.cn/blog_migrate/3f6ed3c5d717ccc33b19dd8843b22900.gif" alt="img"></p>
+<p>对每个卷积核：每个通道分别与卷积核进行卷积，然后将多个通道逐元素求和，再加上偏置，得到输出。</p>
+<p><strong>感受野Respective Filed</strong>：每层中一个输出特征图的像素点在原始图像上映射的区域大小</p>
+<p><strong>padding</strong>：在输入图像边界填充n圈0</p>
+<p><strong>激活层</strong>：给网络提供非线性能力，有sigmoid、tanh、ReLU、Softmax等</p>
+<p><strong>池化层</strong>：降采样，增大感受野，防止过拟合</p>
+<ul>
+<li>最大池化：窗口内最大值为采样值</li>
+<li>均值池化：窗口内均值为采样值</li>
+</ul>
+<p><strong>全连接层</strong>：将特征映射到样本标记空间，进行分类。</p>
+<p>全连接层有n个神经元，相当于对上一层的输出进行n次卷积，得到1*n的向量</p>
+<h5 id="2）反向传播"><a href="#2）反向传播" class="headerlink" title="2）反向传播"></a>2）反向传播</h5><p><strong>损失函数</strong>：衡量预测值与真实值间的差异，常用交叉熵用于分类、均方误差用于回归</p>
+<p><strong>梯度下降</strong>：计算损失函数的梯度，通过学习率控制梯度下降更新参数（神经元的矩阵）。</p>
+<p><strong>正则化</strong>：在损失函数后添加惩罚项，提升模型泛化能力，防止过拟合。</p>
+<p><strong>优化器</strong>:通过优化策略学习可更新参数,降低损失函数值.常用梯度下降法,SGD,Adam等</p>
+<p><strong>学习率</strong>：控制可学习参数的更新速度</p>
+<h5 id="3）超参数"><a href="#3）超参数" class="headerlink" title="3）超参数"></a>3）超参数</h5><table>
+<thead>
+<tr>
+<th>超参数</th>
+<th>名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Epoch</td>
+<td>周期</td>
+<td>一个Epoch就是训练集完成一次训练</td>
+</tr>
+<tr>
+<td>Batch Size</td>
+<td>批大小</td>
+<td>将训练集分成多个Batch Size的子数据集</td>
+</tr>
+<tr>
+<td>Learning Rate</td>
+<td>学习率</td>
+<td>在训练过程中，学习率先取较大值以加快训练；其后需逐渐衰减，使模型收敛。</td>
+</tr>
+<tr>
+<td>Dropout</td>
+<td>正则化</td>
+<td>随机删除一定比例的神经元</td>
+</tr>
+<tr>
+<td>momentum</td>
+<td>优化器的动量</td>
+<td>控制了梯度更新的速度和方向，即当前方向考虑之前更新方向的程度比。常用值&#x3D;0.9</td>
+</tr>
+<tr>
+<td>kernel_size</td>
+<td>卷积核大小</td>
+<td>1）在相同感受野下，卷积核与参数越小，则计算量越小；（2）一般取卷积核&#x3D;3；（3）【&#x3D;1】不改变感受野；（4）通常取奇数，【&#x3D;偶数】无法保证输入与输出的特征图尺寸不变；</td>
+</tr>
+<tr>
+<td>kernel_channels</td>
+<td>卷积层的通道数</td>
+<td>（1）数量越多，提取特征越多；（2）网络性能先上升后下降</td>
+</tr>
+</tbody></table>
+<h2 id="四、VAE"><a href="#四、VAE" class="headerlink" title="四、VAE"></a>四、VAE</h2><h4 id="1-自编码器"><a href="#1-自编码器" class="headerlink" title="1.自编码器"></a>1.自编码器</h4><p>编码器负责将输入数据转换为一个低维的潜在表示（也称为隐变量），而解码器则从这个潜在表示中重构出与原始输入尽可能相似的数据。在训练过程中，自编码器通过最小化输入数据和重构数据之间的差异来学习参数。这种差异通常通过均方误差（MSE）或其他距离度量来衡量。理想情况下，自编码器学习到的编码器将能够提取输入数据的最重要特征，而解码器能够完美重构输入数据。</p>
+<h4 id="2-变分自编码器"><a href="#2-变分自编码器" class="headerlink" title="2.变分自编码器"></a>2.变分自编码器</h4><p>VAE通过概率分布来描述潜在空间，而不是学习一个确定的潜在表示。这种概率表示允许VAE生成新的数据点，并且能够更好地处理数据中的随机性。</p>
+<p>损失函数包括重构损失和KL散度，分别表示重构输出与原始输入的差异，以及隐变量分布与先验分布的差异</p>
+<h1 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h1><p>transformer功能：输入文本，预测下一个最可能单词，输出概率分布。</p>
+<p>transformer三大优势：并行输入，效率高；堆叠多层，捕捉深层次表达；长距离信息捕捉能力强。</p>
+<h2 id="transformer结构"><a href="#transformer结构" class="headerlink" title="transformer结构"></a>transformer结构</h2><h3 id="词嵌入Embedding"><a href="#词嵌入Embedding" class="headerlink" title="词嵌入Embedding"></a>词嵌入Embedding</h3><p><strong>one-hot编码</strong>：用由0和1组成的向量代表一个词，每个词有一个位置为1，其余全0。占用的空间大，并且无法表示语义关系。</p>
+<p><strong>稠密词向量</strong>：把词映射到低维、连续实数向量。可以表示词与词之间的关系，占用空间小。</p>
+<p><strong>词嵌入过程</strong>：</p>
+<ol>
+<li>输入文本。</li>
+<li>分词处理：使用Tokenizer将文本分为多个Token，生成Token序列。</li>
+<li>词汇表映射：将Token映射到ID，生成Token ID序列。</li>
+<li>将序列放入嵌入层，得到词嵌入矩阵。</li>
+</ol>
+<p><strong>位置编码</strong>：</p>
+<p>对词嵌入向量加上位置编码，能够表达Token的顺序信息，得到含位置信息的词嵌入向量。<br>$$<br>\begin{align}<br>PE(pos,2i) &#x3D; sin(\frac{pos}{10000^{(2i&#x2F;d_{model})}})\<br>PE(pos,2i+1) &#x3D; cos(\frac{pos}{10000^{(2i&#x2F;d_{model})}})\<br>\end{align}<br>$$</p>
+<h3 id="Attention"><a href="#Attention" class="headerlink" title="Attention"></a>Attention</h3><p><strong>Attention机制</strong>：考虑其他Token对当前Token在语义空间中的影响。</p>
+<p><strong>多头自注意力机制</strong>：</p>
+<ol>
+<li><p>线性变换生成Q、K、V矩阵。Q：查询向量，表示关注什么。K：键向量，表示拥有什么信息。V：值向量，表示具体内容。</p>
+</li>
+<li><p>计算注意力得分矩阵：Q * K^T。矩阵中（i，j）表示第i个token对第j个token的注意力权重。权重越高表示语义相关度越高。</p>
+</li>
+<li><p>归一化、加权求和：</p>
+</li>
+</ol>
+<p>$$<br>Attention(Q,K,V) &#x3D; softmax(Q * K^T &#x2F; sqrt(dk)) * V<br>$$</p>
+<p>除以sqrt(dk)：进行缩放，控制方差，防止softmax输出接近one-hot。</p>
+<p>softmax：归一化，每一行求和为1。</p>
+<ol start="4">
+<li>多头并行处理：多组W^Q,W^K,W^V，分别计算Q、K、V，将得到的注意力矩阵拼接后再线性化。每个头关注不同的语义关系，比如主谓关系、修饰关系等。</li>
+</ol>
+<h3 id="LayerNorm层归一化"><a href="#LayerNorm层归一化" class="headerlink" title="LayerNorm层归一化"></a>LayerNorm层归一化</h3><p>作用：稳定训练过程，防止梯度爆炸或消失；加速收敛；规范化每层的输入分布。<br>$$<br>LayerNorm(x) &#x3D; y · (x-μ) &#x2F; σ + β<br>$$</p>
+<h3 id="残差连接"><a href="#残差连接" class="headerlink" title="残差连接"></a>残差连接</h3><p>作用：随着网络层数增加，梯度爆炸或消失，网络性能下降，信息在传播中丢失。通过残差连接，保证梯度传播，信息保留，实现深层次的网络结构。<br>$$<br>output &#x3D; LayerNorm(x+F(x))<br>$$<br>Pre-LN更易训练：梯度直接传递，减轻梯度消失&#x2F;爆炸；在大学习率下也能稳定；适合更深层次网络。</p>
+<h3 id="FFN前馈神经网络"><a href="#FFN前馈神经网络" class="headerlink" title="FFN前馈神经网络"></a>FFN前馈神经网络</h3><p>流程：输入包含语义的矩阵–升维，得到更多深层次信息–激活函数，引入非线性–降维，让输入输出维度相同–残差连接，保证梯度稳定–输出。</p>
+<h3 id="堆叠多层"><a href="#堆叠多层" class="headerlink" title="堆叠多层"></a>堆叠多层</h3><p>一个Transformer Block包含：多头注意力、LN、FFN、LN，将多层block堆叠，逐渐训练出语法结构、语义理解、高级语义抽象等。</p>
+<h3 id="输入输出"><a href="#输入输出" class="headerlink" title="输入输出"></a>输入输出</h3><h4 id="Decoder-only（GPT）"><a href="#Decoder-only（GPT）" class="headerlink" title="Decoder only（GPT）"></a>Decoder only（GPT）</h4><p>通过一个下三角+对角线保留，上三角置零的Mask，使得到的注意力矩阵只包含一个token对自身和对之前的token的注意力。保证序列生成时的自回归特性。应用于GPT等生成式模型的解码器子注意力。</p>
+<p>自回归生成过程：输入序列通过多层Transformer–提取最后一个token的表示–投影到词汇表空间–softmax归一化得到概率分布–通过采样策略选择下一个词–更新序列，生成下一个词。</p>
+<h4 id="Encode-only（Bert）"><a href="#Encode-only（Bert）" class="headerlink" title="Encode only（Bert）"></a>Encode only（Bert）</h4><p>注意力矩阵包含双向权重，每个token都能看到全部文本。在文本前添加CLS，聚合整个句子的语义信息。用于情感分析、相似度等。</p>
+<h4 id="Encode-Decode（T5）"><a href="#Encode-Decode（T5）" class="headerlink" title="Encode-Decode（T5）"></a>Encode-Decode（T5）</h4><p>编码器处理源输入，编码器输出作为解码器的K和V。</p>
+<p>解码器采用交叉注意力，关注源语言信息，进行自回归生成。</p>
+<p>交叉注意力：解码器的Q去查询编码器的K和V。</p>
+<p>生成过程：从BOS开始每次生成一个token，当前生成的token作为下一步的输入，通过交叉注意力关注源语言，直到生成EOS结束。</p>
+<h3 id="MOE-混合专家模型"><a href="#MOE-混合专家模型" class="headerlink" title="MOE 混合专家模型"></a>MOE 混合专家模型</h3><p>目的：为了满足质量和效率。</p>
+<p><strong>MoE</strong>：在FFN层，只激活部分参数。通过门控网络决定token激活哪部分参数，加快推理速度而不降低推理性能。</p>
+<p>SparseMoE：在Attention层和LN+残差连接后，用router层判断每个token激活专家层的概率，选择top k个专家，经过LN归一化后生成专家掩码，进行前向传播。</p>
+<p>ShareExpert SparseMoE：在QKV时保持维度不变，映射到隐空间学习信息，减少参数量并保持高精度。每个token激活共享专家，并选择部分剩下的专家激活，最后加权得到结果。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%A4%A7%E6%A8%A1%E5%9E%8B/" rel="tag"># 大模型</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2026/04/10/%E5%8A%9B%E6%89%A3%E7%AC%94%E8%AE%B0/" rel="prev" title="力扣笔记">
+      <i class="fa fa-chevron-left"></i> 力扣笔记
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">机器学习基本概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">一、概念</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.什么是机器学习</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%88%86%E7%B1%BB"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.机器学习分类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%BB%BB%E5%8A%A1"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.机器学习的任务</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81Pytorch"><span class="nav-number">1.2.</span> <span class="nav-text">二、Pytorch</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BD%BF%E7%94%A8"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81CNN"><span class="nav-number">1.3.</span> <span class="nav-text">三、CNN</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E5%85%83%EF%BC%9A"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">神经元：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%EF%BC%9A"><span class="nav-number">1.3.1.2.</span> <span class="nav-text">神经网络：</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.卷积神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1%EF%BC%89%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">1）网络结构</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2%EF%BC%89%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">2）反向传播</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3%EF%BC%89%E8%B6%85%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">3）超参数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81VAE"><span class="nav-number">1.4.</span> <span class="nav-text">四、VAE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.自编码器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E5%8F%98%E5%88%86%E8%87%AA%E7%BC%96%E7%A0%81%E5%99%A8"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.变分自编码器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Transformer"><span class="nav-number">2.</span> <span class="nav-text">Transformer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#transformer%E7%BB%93%E6%9E%84"><span class="nav-number">2.1.</span> <span class="nav-text">transformer结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%8D%E5%B5%8C%E5%85%A5Embedding"><span class="nav-number">2.1.1.</span> <span class="nav-text">词嵌入Embedding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Attention"><span class="nav-number">2.1.2.</span> <span class="nav-text">Attention</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LayerNorm%E5%B1%82%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">2.1.3.</span> <span class="nav-text">LayerNorm层归一化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AE%8B%E5%B7%AE%E8%BF%9E%E6%8E%A5"><span class="nav-number">2.1.4.</span> <span class="nav-text">残差连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FFN%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">2.1.5.</span> <span class="nav-text">FFN前馈神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A0%86%E5%8F%A0%E5%A4%9A%E5%B1%82"><span class="nav-number">2.1.6.</span> <span class="nav-text">堆叠多层</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA"><span class="nav-number">2.1.7.</span> <span class="nav-text">输入输出</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Decoder-only%EF%BC%88GPT%EF%BC%89"><span class="nav-number">2.1.7.1.</span> <span class="nav-text">Decoder only（GPT）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Encode-only%EF%BC%88Bert%EF%BC%89"><span class="nav-number">2.1.7.2.</span> <span class="nav-text">Encode only（Bert）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Encode-Decode%EF%BC%88T5%EF%BC%89"><span class="nav-number">2.1.7.3.</span> <span class="nav-text">Encode-Decode（T5）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MOE-%E6%B7%B7%E5%90%88%E4%B8%93%E5%AE%B6%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.8.</span> <span class="nav-text">MOE 混合专家模型</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Porter</p>
+  <div class="site-description" itemprop="description">世界是你们的，也是我们的，但是归根结底是你们的</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Porter</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
