@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.json"};
   </script>
 
   <meta name="description" content="链表双指针技巧合并或分解链表：用双指针分别遍历原链表，第三个指针配合虚拟头节点简化边界处理。21合并两个有序链表 快慢指针：寻找中点、环形链表问题。快慢指针追击，相遇说明成环，其中一指针回到头节点。以相同速度前进，再次相遇的位置就是环的起点。141环形链表，142环形链表II 12345678910111213141516ListNode *detectCycle(ListNode *head)">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="链表双指针技巧合并或分解链表：用双指针分别遍历原链表，第三个指针配合虚拟头节点简化边界处理。21合并两个有序链表 快慢指针：寻找中点、环形链表问题。快慢指针追击，相遇说明成环，其中一指针回到头节点。以相同速度前进，再次相遇的位置就是环的起点。141环形链表，142环形链表II 12345678910111213141516ListNode *detectCycle(ListNode *head)">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-04-10T13:00:00.000Z">
-<meta property="article:modified_time" content="2026-04-14T13:48:27.128Z">
+<meta property="article:modified_time" content="2026-04-17T09:19:50.125Z">
 <meta property="article:author" content="Porter">
 <meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
@@ -104,6 +104,7 @@
 
   <div class="site-nav-right">
     <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
 </div>
@@ -123,11 +124,38 @@
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
   </ul>
 </nav>
 
 
 
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
 
 </div>
     </header>
@@ -182,7 +210,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2026-04-14 21:48:27" itemprop="dateModified" datetime="2026-04-14T21:48:27+08:00">2026-04-14</time>
+                <time title="修改时间：2026-04-17 17:19:50" itemprop="dateModified" datetime="2026-04-17T17:19:50+08:00">2026-04-17</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -255,8 +283,8 @@
 </ol>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/binary-tree-inorder-traversal/?envType=study-plan-v2&envId=top-100-liked">94二叉树的中序遍历</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-depth-of-binary-tree/?envType=study-plan-v2&envId=top-100-liked">104二叉树的最大深度</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/invert-binary-tree/?envType=study-plan-v2&envId=top-100-liked">226翻转二叉树</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/diameter-of-binary-tree?envType=study-plan-v2&envId=top-100-liked">543二叉树的直径</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/flatten-binary-tree-to-linked-list?envType=study-plan-v2&envId=top-100-liked">114二叉树展开为链表</a></p>
 <h3 id="动规、回溯、DFS的区别"><a href="#动规、回溯、DFS的区别" class="headerlink" title="动规、回溯、DFS的区别"></a>动规、回溯、DFS的区别</h3><p>动规就是分解问题的思路，关注整个子树，每个子树的结构相同。</p>
-<p>回溯算法关注树枝，在for循环中节点之间移动时进行选择与撤销选择。</p>
-<p>DFS关注每个节点本身。</p>
+<p>回溯算法关注树枝，<strong>在树枝上做选择（到达节点前）</strong>，for循环中节点之间移动时进行选择与撤销选择。</p>
+<p>DFS关注每个节点本身。for循环外做选择。</p>
 <h3 id="构造二叉树"><a href="#构造二叉树" class="headerlink" title="构造二叉树"></a>构造二叉树</h3><p>分解问题的思路，先构造根节点，再构造左右子树。前序和后序遍历可以确定根节点，通过中序遍历确认左右子树的范围。<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/construct-binary-tree-from-preorder-and-inorder-traversal/">105从前序和中序遍历序列构造二叉树</a></p>
 <h3 id="最近公共祖先"><a href="#最近公共祖先" class="headerlink" title="最近公共祖先"></a>最近公共祖先</h3><p>如果一个节点是公共祖先，那么就能在左右子树中分别找到p和q。通过find函数找子树是否存在对应的val1或val2，递归查找，找到就返回子节点，找不到就说明不存在。根据题目要求，如果没有说明一定存在p和q，就必须实现完全遍历，在后序位置再进行判断。</p>
 <p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lowest-common-ancestor-of-a-binary-tree/">236二叉树的最近公共祖先</a></p>
@@ -265,7 +293,14 @@
 <li>对于每个节点node，左右子树都是BST。</li>
 <li>BST的中序遍历有序。</li>
 </ol>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/">230二叉搜索树中第k小的元素</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/kth-smallest-element-in-a-bst/">230二叉搜索树中第k小的元素</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/validate-binary-search-tree/?envType=study-plan-v2&envId=top-100-liked">98验证二叉搜索树</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/convert-sorted-array-to-binary-search-tree/?envType=study-plan-v2&envId=top-100-liked">108将有序数组转换为二叉搜索树</a></p>
+<h2 id="数据结构设计"><a href="#数据结构设计" class="headerlink" title="数据结构设计"></a>数据结构设计</h2><h3 id="LRU"><a href="#LRU" class="headerlink" title="LRU"></a>LRU</h3><p>要实现LRU，考虑两点：根据key查询val，需要哈希表实现；要删除最久未使用的，需要链表实现。<br>get函数：查表返回val，并将节点移动到链表尾。由于节点移动涉及到上一个节点的next指针，必须采用双向链表。<br>put函数：查表，如果key存在则修改val。如果不存在，判断容量是否已满，已满则删掉链表头节点。然后添加新节点到链表尾。由于删除节点时，需要把映射也删除，所以链表节点同时存放key和value。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lru-cache/?envType=study-plan-v2&envId=top-100-liked">146LRU缓存</a></p>
+<h2 id="回溯算法"><a href="#回溯算法" class="headerlink" title="回溯算法"></a>回溯算法</h2><p>回溯算法代码框架：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">backtrack</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(到达叶子节点)&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i = <span class="number">0</span>;i&lt;size;++i)&#123;</span><br><span class="line">        <span class="comment">//做选择</span></span><br><span class="line">        ...</span><br><span class="line">        <span class="built_in">backtrack</span>();</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">//撤销选择</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>backtrack函数一般没有返回值，如果要提前结束遍历，可以用一个全局变量。</p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/permutations/?envType=study-plan-v2&envId=top-100-liked">46全排列</a>，<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/n-queens/?envType=study-plan-v2&envId=top-100-liked">51N皇后</a></p>
 
     </div>
 
@@ -287,10 +322,7 @@
     <a href="/2026/04/01/Tortoisegit-%E5%85%A5%E9%97%A8%E6%95%99%E7%A8%8B/" rel="prev" title="Tortoisegit 入门教程">
       <i class="fa fa-chevron-left"></i> Tortoisegit 入门教程
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2026/04/15/%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="大模型学习笔记">
-      大模型学习笔记 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -349,7 +381,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E6%8A%80%E5%B7%A7"><span class="nav-number">1.1.</span> <span class="nav-text">双指针技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E7%BF%BB%E8%BD%AC"><span class="nav-number">1.2.</span> <span class="nav-text">链表翻转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E6%8A%80%E5%B7%A7-1"><span class="nav-number">2.1.</span> <span class="nav-text">双指针技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88"><span class="nav-number">2.1.1.</span> <span class="nav-text">快慢指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-number">2.1.2.</span> <span class="nav-text">滑动窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E5%8F%B3%E6%8C%87%E9%92%88"><span class="nav-number">2.1.3.</span> <span class="nav-text">左右指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-number">2.1.4.</span> <span class="nav-text">二分查找</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">2.2.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C-%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">前缀和+哈希表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86%E6%8A%80%E5%B7%A7"><span class="nav-number">2.3.</span> <span class="nav-text">二维数组遍历技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88"><span class="nav-number">3.</span> <span class="nav-text">栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%85%A5%E5%90%8E%E5%87%BA%E6%80%A7%E8%B4%A8"><span class="nav-number">3.1.</span> <span class="nav-text">先入后出性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A0%88"><span class="nav-number">3.2.</span> <span class="nav-text">设计栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E6%A0%88"><span class="nav-number">3.3.</span> <span class="nav-text">单调栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E9%97%AE%E9%A2%98%E4%B8%A4%E7%A7%8D%E6%80%9D%E8%B7%AF"><span class="nav-number">4.1.</span> <span class="nav-text">递归问题两种思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E8%A7%84%E3%80%81%E5%9B%9E%E6%BA%AF%E3%80%81DFS%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.2.</span> <span class="nav-text">动规、回溯、DFS的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">4.3.</span> <span class="nav-text">构造二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><span class="nav-number">4.4.</span> <span class="nav-text">最近公共祖先</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91"><span class="nav-number">5.</span> <span class="nav-text">二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BST%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">5.1.</span> <span class="nav-text">BST的三大特性</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8"><span class="nav-number">1.</span> <span class="nav-text">链表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E6%8A%80%E5%B7%A7"><span class="nav-number">1.1.</span> <span class="nav-text">双指针技巧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%93%BE%E8%A1%A8%E7%BF%BB%E8%BD%AC"><span class="nav-number">1.2.</span> <span class="nav-text">链表翻转</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">2.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8C%E6%8C%87%E9%92%88%E6%8A%80%E5%B7%A7-1"><span class="nav-number">2.1.</span> <span class="nav-text">双指针技巧</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E6%85%A2%E6%8C%87%E9%92%88"><span class="nav-number">2.1.1.</span> <span class="nav-text">快慢指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3"><span class="nav-number">2.1.2.</span> <span class="nav-text">滑动窗口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A6%E5%8F%B3%E6%8C%87%E9%92%88"><span class="nav-number">2.1.3.</span> <span class="nav-text">左右指针</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE"><span class="nav-number">2.1.4.</span> <span class="nav-text">二分查找</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C"><span class="nav-number">2.2.</span> <span class="nav-text">前缀和</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%92%8C-%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="nav-number">2.2.1.</span> <span class="nav-text">前缀和+哈希表</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E9%81%8D%E5%8E%86%E6%8A%80%E5%B7%A7"><span class="nav-number">2.3.</span> <span class="nav-text">二维数组遍历技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%88"><span class="nav-number">3.</span> <span class="nav-text">栈</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%88%E5%85%A5%E5%90%8E%E5%87%BA%E6%80%A7%E8%B4%A8"><span class="nav-number">3.1.</span> <span class="nav-text">先入后出性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E8%AE%A1%E6%A0%88"><span class="nav-number">3.2.</span> <span class="nav-text">设计栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%95%E8%B0%83%E6%A0%88"><span class="nav-number">3.3.</span> <span class="nav-text">单调栈</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">4.</span> <span class="nav-text">二叉树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%92%E5%BD%92%E9%97%AE%E9%A2%98%E4%B8%A4%E7%A7%8D%E6%80%9D%E8%B7%AF"><span class="nav-number">4.1.</span> <span class="nav-text">递归问题两种思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A8%E8%A7%84%E3%80%81%E5%9B%9E%E6%BA%AF%E3%80%81DFS%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.2.</span> <span class="nav-text">动规、回溯、DFS的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E4%BA%8C%E5%8F%89%E6%A0%91"><span class="nav-number">4.3.</span> <span class="nav-text">构造二叉树</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E8%BF%91%E5%85%AC%E5%85%B1%E7%A5%96%E5%85%88"><span class="nav-number">4.4.</span> <span class="nav-text">最近公共祖先</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91"><span class="nav-number">5.</span> <span class="nav-text">二叉搜索树</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BST%E7%9A%84%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="nav-number">5.1.</span> <span class="nav-text">BST的三大特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">6.</span> <span class="nav-text">数据结构设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LRU"><span class="nav-number">6.1.</span> <span class="nav-text">LRU</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E6%BA%AF%E7%AE%97%E6%B3%95"><span class="nav-number">7.</span> <span class="nav-text">回溯算法</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -363,7 +395,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">4</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -372,7 +404,7 @@
         <span class="site-state-item-name">分类</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
@@ -442,6 +474,10 @@
   
 
 
+
+
+  
+<script src="/js/local-search.js"></script>
 
 
 
